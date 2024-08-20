@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, jsonify, request, session, make_response
 
 
 def create_app(test_config=None):
@@ -24,10 +24,20 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    @app.route('/api/data')
+    def get_data():
+        data = {'message': 'Hello from the backend!'}
+        return jsonify(data)
+
+    @app.route('/api/users', methods=['GET', 'POST'])
+    def users():
+        if request.method == 'GET':
+            # Implement logic to fetch users from the database
+         pass
+        elif request.method == 'POST':
+         # Implement logic to create a new user in the database
+         pass
 
     return app
+    
     
