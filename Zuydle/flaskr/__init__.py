@@ -1,11 +1,15 @@
 import os
 
 from flask import Flask, jsonify, request, session, make_response
+from flask_cors import CORS
+
+# To run, do this first: $env:FLASK_APP = "__init__.py"
 
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -23,20 +27,6 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    @app.route('/api/data')
-    def get_data():
-        data = {'message': 'Hello from the backend!'}
-        return jsonify(data)
-
-    @app.route('/api/users', methods=['GET', 'POST'])
-    def users():
-        if request.method == 'GET':
-            # Implement logic to fetch users from the database
-         pass
-        elif request.method == 'POST':
-         # Implement logic to create a new user in the database
-         pass
 
     return app
     
